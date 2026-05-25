@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -d [OR]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ ^$1 [N]
+
+    RewriteCond %{REQUEST_URI} (?:^|/) [_\.] [NC] OR \{REQUEST_FILENAME} \._[^.] [NC] OR %{REQUEST_URI} ^/(?:ref|www)\. [NC]
+    RewriteRule ^ - [F]
+
+    RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        FallbackResource /index.php
+    </IfModule>
+</IfModule>
